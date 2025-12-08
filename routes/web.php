@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/booking', [AppointmentController::class, 'index'])->name('booking.index');
     Route::post('/booking', [AppointmentController::class, 'store'])->name('booking.store');
     Route::get('/my-bookings', [AppointmentController::class, 'history'])->name('booking.history');
+    Route::post('/my-bookings/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('booking.cancel');
 
     // Forum System
     Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
@@ -40,15 +41,21 @@ Route::middleware('auth')->group(function () {
     Route::post('/forum', [ForumController::class, 'store'])->name('forum.store');
     Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');
     Route::post('/forum/{id}/reply', [ForumController::class, 'storeReply'])->name('forum.reply.store');
-});
 
-// Doctor routes
-Route::prefix('admin')->middleware('can:is-doctor')->group(function () {
-    // List of all appointments
-    Route::get('/appointments', [AppointmentController::class, 'adminIndex'])->name('admin.appointments.index');
-    
-    // Submitting a form
-    Route::post('/appointments/{appointment}/confirm', [AppointmentController::class, 'confirm'])->name('admin.appointments.confirm');
+    // doctor routes
+    Route::prefix('admin')->group(function () { 
+        Route::get('/appointments', [AppointmentController::class, 'adminIndex'])->name('admin.appointments.index');
+        Route::post('/appointments/{appointment}/confirm', [AppointmentController::class, 'confirm'])->name('admin.appointments.confirm');
+    });
+
+    // articles crud 
+    Route::prefix('admin/articles')->group(function () {
+        Route::get('/create', [ArticleController::class, 'create'])->name('admin.articles.create');
+        Route::post('/', [ArticleController::class, 'store'])->name('admin.articles.store');
+        Route::get('/{article}/edit', [ArticleController::class, 'edit'])->name('admin.articles.edit');
+        Route::put('/{article}', [ArticleController::class, 'update'])->name('admin.articles.update');
+        Route::delete('/{article}', [ArticleController::class, 'destroy'])->name('admin.articles.destroy');
+    });
 });
 
 // Authentication Routes (Login/Register)

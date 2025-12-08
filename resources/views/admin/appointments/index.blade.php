@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<h2 class="mb-4 text-danger">Admin Panel: All Appointment Requests</h2>
 
 <div class="table-responsive bg-white p-3 rounded shadow-sm">
     <table class="table table-bordered table-striped">

@@ -20,6 +20,8 @@ class ArticleSeeder extends Seeder
             ['title' => 'Cara Mengelola Stress dengan Teknik Pernapasan', 'category' => 'Mental Health'],
             ['title' => 'Vaksin Booster dan Aturan Kampus Terbaru', 'category' => 'Medical'],
         ];
+        
+        $i = 1;
 
         foreach ($articles as $data) {
             Article::create([
@@ -27,7 +29,7 @@ class ArticleSeeder extends Seeder
                 'slug' => Str::slug($data['title']),
                 'category' => $data['category'],
                 'content' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                'image_path' => 'default.jpg'
+                'image_path' => 'https://picsum.photos/seed/' . ($i++) . '/400/250', // random images
             ]);
         }
     }

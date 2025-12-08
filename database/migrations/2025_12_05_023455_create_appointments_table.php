@@ -17,7 +17,7 @@ return new class extends Migration
             $table->enum('type', ['medical', 'psychology']);
             $table->dateTime('scheduled_at');
             $table->text('notes')->nullable(); 
-            $table->enum('status', ['pending', 'confirmed', 'completed'])->default('pending');
+            $table->enum('status', ['pending', 'confirmed', 'completed', 'canceled'])->default('pending');
             $table->timestamps();
         });
     }

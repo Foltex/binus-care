@@ -10,7 +10,7 @@
                 <th>Type</th>
                 <th>Status</th>
                 <th>Notes</th>
-            </tr>
+                <th>Action</th> </tr>
         </thead>
         <tbody>
             @forelse($appointments as $apt)
@@ -26,15 +26,24 @@
                             <span class="badge bg-warning text-dark">Pending</span>
                         @elseif($apt->status == 'confirmed')
                             <span class="badge bg-primary">Confirmed</span>
+                        @elseif($apt->status == 'canceled') <span class="badge bg-danger">Canceled</span>
                         @else
                             <span class="badge bg-secondary">Completed</span>
                         @endif
                     </td>
                     <td>{{ $apt->notes ?? '-' }}</td>
-                </tr>
+                    
+                    <td>
+                        @if ($apt->status == 'pending' || $apt->status == 'confirmed')
+                            <form action="{{ route('booking.cancel', $apt->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this appointment?');">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-danger">Cancel</button>
+                            </form>
+                        @endif
+                    </td>
+                    </tr>
             @empty
-                <tr><td colspan="4" class="text-center text-muted">No appointment history found.</td></tr>
-            @endforelse
+                <tr><td colspan="5" class="text-center text-muted">No appointment history found.</td></tr> @endforelse
         </tbody>
     </table>
 </div>

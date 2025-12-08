@@ -12,20 +12,23 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // 1. Appointment Statistics
-        $pendingAppointments = $user->appointments()->where('status', 'pending')->count();
-        $confirmedAppointments = $user->appointments()->where('status', 'confirmed')->count();
-
-        // 2. Forum Activity
-        $totalThreads = $user->threads()->count();
-        $latestThreads = $user->threads()->latest()->take(3)->get(); // Get the last 3 threads
-
-        // Pass all statistics to the dashboard view
-        return view('dashboard', compact(
-            'pendingAppointments', 
-            'confirmedAppointments', 
-            'totalThreads', 
-            'latestThreads'
-        ));
+        if ($user->isDoctor()) {
+            // DOCTOR: Fetch ALL appointments (Admin View Data)
+            $allAppointments = Appointment::with('user')->orderBy('created_at', 'desc')->get();
+            return view('dashboard', compact('allAppointments'));
+        } else {
+            // STUDENT: Fetch personal stats (Student View Data)
+            $pendingAppointments = $user->appointments()->where('status', 'pending')->count();
+            $confirmedAppointments = $user->appointments()->where('status', 'confirmed')->count();
+            $totalThreads = $user->threads()->count();
+            $latestThreads = $user->threads()->latest()->take(3)->get();
+            
+            return view('dashboard', compact(
+                'pendingAppointments', 
+                'confirmedAppointments', 
+                'totalThreads', 
+                'latestThreads'
+            ));
+        }
     }
 }
