@@ -4,7 +4,7 @@
 <div class="py-4">
     <div class="row mb-4">
         <div class="col-12">
-            <h1 class="fw-bold text-primary">👋 Welcome Back, {{ Auth::user()->name }}!</h1>
+            <h1 class="fw-bold text-primary">Welcome Back, {{ Auth::user()->name }}!</h1>
             <p class="lead text-muted">A snapshot of your health and community activity.</p>
         </div>
     </div>

@@ -29,7 +29,7 @@
                                 {{ Auth::user()->name }}
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item fw-bold" href="{{ route('dashboard') }}">My Dashboard</a></li> 
+                                <li><a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a></li> 
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{{ route('booking.history') }}">My History</a></li>
                                 <li><hr class="dropdown-divider"></li>

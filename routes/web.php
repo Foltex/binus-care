@@ -42,5 +42,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/forum/{id}/reply', [ForumController::class, 'storeReply'])->name('forum.reply.store');
 });
 
+// Doctor routes
+Route::prefix('admin')->middleware('can:is-doctor')->group(function () {
+    // List of all appointments
+    Route::get('/appointments', [AppointmentController::class, 'adminIndex'])->name('admin.appointments.index');
+    
+    // Submitting a form
+    Route::post('/appointments/{appointment}/confirm', [AppointmentController::class, 'confirm'])->name('admin.appointments.confirm');
+});
+
 // Authentication Routes (Login/Register)
 require __DIR__.'/auth.php';

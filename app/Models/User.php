@@ -10,8 +10,10 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens,HasFactory, Notifiable; 
+    use HasApiTokens,HasFactory, Notifiable;
+
+    public const ROLE_STUDENT = 'student';
+    public const ROLE_DOCTOR = 'doctor';
 
     /**
      * The attributes that are mass assignable.
@@ -22,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -65,5 +68,15 @@ class User extends Authenticatable
     public function replies()
     {
         return $this->hasMany(ForumReply::class);
+    }
+
+    public function isDoctor(): bool
+    {
+        return $this->role === self::ROLE_DOCTOR;
+    }
+
+    public function isStudent(): bool
+    {
+        return $this->role === self::ROLE_STUDENT;
     }
 }
