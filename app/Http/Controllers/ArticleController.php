@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
-    /**
-     * Show the list of lifestyle articles.
-     */
     public function index()
     {
         // Get articles, newest first, 9 per page
@@ -18,10 +15,6 @@ class ArticleController extends Controller
         return view('articles.index', compact('articles'));
     }
 
-    /**
-     * Show a single article.
-     * We use 'slug' (e.g., 'healthy-eating-tips') instead of ID for better URLs.
-     */
     public function show($slug)
     {
         $article = Article::where('slug', $slug)->firstOrFail();

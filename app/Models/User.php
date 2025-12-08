@@ -42,7 +42,7 @@ class User extends Authenticatable
     /**
      * Get the attributes that should be cast.
      *
-     * @return array<string, string>
+     * @return array<string,
      */
     protected function casts(): array
     {
@@ -57,13 +57,11 @@ class User extends Authenticatable
         return $this->hasMany(Appointment::class);
     }
 
-    // A user can create many forum threads
     public function threads()
     {
         return $this->hasMany(ForumThread::class);
     }
-
-    // A user can post many replies
+    
     public function replies()
     {
         return $this->hasMany(ForumReply::class);

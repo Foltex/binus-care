@@ -5,30 +5,29 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\DashboardController;
 
 // Home Page
 Route::get('/', function () {
     return view('home'); 
 })->name('home');
 
-// Article / Blog Routes (This fixes your error!)
+// Article / Blog Routes 
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
 Route::get('/articles/{slug}', [ArticleController::class, 'show'])->name('articles.show');
 
 
-// --- 2. AUTHENTICATED ROUTES (Must be logged in) ---
+// AUTHENTICATED ROUTES (Must be logged in)
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    // Profile (Breeze defaults)
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    // --- YOUR CUSTOM BEEWELL ROUTES ---
     
     // Booking System
     Route::get('/booking', [AppointmentController::class, 'index'])->name('booking.index');

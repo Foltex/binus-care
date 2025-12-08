@@ -9,29 +9,18 @@ use Illuminate\Support\Facades\Auth;
 
 class ForumController extends Controller
 {
-    /**
-     * Display a list of all forum threads.
-     */
     public function index()
     {
-        // Get threads, ordered by newest first. 
-        // 'with' is used to preload the User to avoid N+1 query performance issues.
         $threads = ForumThread::with('user')->latest()->paginate(10);
 
         return view('forum.index', compact('threads'));
     }
 
-    /**
-     * Show the form for creating a new thread.
-     */
     public function create()
     {
         return view('forum.create');
     }
 
-    /**
-     * Store a newly created thread in the database.
-     */
     public function store(Request $request)
     {
         // 1. Validate the input
@@ -42,7 +31,7 @@ class ForumController extends Controller
 
         // 2. Create the thread linked to the current user
         ForumThread::create([
-            'user_id' => Auth::id(), // Gets the ID of the currently logged-in student
+            'user_id' => Auth::id(), 
             'title' => $request->title,
             'body' => $request->body,
         ]);
@@ -51,24 +40,14 @@ class ForumController extends Controller
         return redirect()->route('forum.index')->with('success', 'Thread created successfully!');
     }
 
-    /**
-     * Display the specified thread and its replies.
-     */
     public function show($id)
     {
-        // Find the thread by ID or fail (404) if not found.
-        // We load: 
-        // 1. The 'user' who created the thread.
-        // 2. The 'replies' to this thread.
-        // 3. The 'replies.user' (the authors of the replies).
         $thread = ForumThread::with(['user', 'replies.user'])->findOrFail($id);
 
         return view('forum.show', compact('thread'));
     }
 
-    /**
-     * Store a new reply to a specific thread.
-     */
+
     public function storeReply(Request $request, $id)
     {
         // 1. Validate the reply body

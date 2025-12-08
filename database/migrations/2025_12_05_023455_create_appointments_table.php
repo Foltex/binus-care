@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // The Student
-            $table->enum('type', ['medical', 'psychology']); // Type of checkup
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
+            $table->enum('type', ['medical', 'psychology']);
             $table->dateTime('scheduled_at');
-            $table->text('notes')->nullable(); // Symptoms or reason
+            $table->text('notes')->nullable(); 
             $table->enum('status', ['pending', 'confirmed', 'completed'])->default('pending');
             $table->timestamps();
         });

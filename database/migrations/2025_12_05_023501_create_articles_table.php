@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('content');
-            $table->string('category'); // e.g., 'Nutrition', 'Mental Health'
+            $table->string('category'); 
             $table->string('image_path')->nullable();
             $table->timestamps();
         });
