@@ -1,53 +1,82 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="p-5 mb-4 bg-light rounded-3 shadow-sm text-center" style="background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);">
+<div class="p-5 mb-5 bg-light rounded-4 shadow-sm text-center position-relative overflow-hidden" 
+     style="background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);">
+    
     <div class="container-fluid py-5">
-        <h1 class="display-5 fw-bold text-primary">Welcome to BinusCare</h1>
-        <p class="col-md-8 fs-4 mx-auto text-muted">
-            Your companion for mental and physical health at Binus. <br>
-            Book sessions, join the community, and stay healthy.
+        <h1 class="display-4 fw-bold text-primary mb-3">Welcome to BinusCare</h1>
+        <p class="col-md-8 fs-5 mx-auto text-muted mb-4">
+            Your companion for mental and physical health at Binus.<br>
+            Book sessions, join the community, and stay healthy together.
         </p>
-        @auth
-            <a href="{{ route('booking.index') }}" class="btn btn-primary btn-lg px-4 gap-3">Book a Session</a>
-        @else
-            <a href="{{ route('login') }}" class="btn btn-primary btn-lg px-4 gap-3">Login to Start</a>
-            <a href="{{ route('register') }}" class="btn btn-outline-secondary btn-lg px-4">Register</a>
-        @endauth
-    </div>
-</div>
 
-<div class="row align-items-md-stretch">
-    <div class="col-md-4 mb-4">
-        <div class="h-100 p-4 text-white bg-success rounded-3 shadow-sm">
-            <h2>🍎 Lifestyle</h2>
-            <p>Read the latest tips on nutrition, sleep, and handling exam stress.</p>
-            <a href="{{ route('articles.index') }}" class="btn btn-outline-light">Read Articles</a>
-        </div>
-    </div>
-
-    <div class="col-md-4 mb-4">
-        <div class="h-100 p-4 bg-light border rounded-3 shadow-sm">
-            <h2 class="text-primary">💬 Community</h2>
-            <p>Feeling overwhelmed? You are not alone. Join the discussion.</p>
-            <a href="{{ route('forum.index') }}" class="btn btn-outline-primary">Visit Forum</a>
-        </div>
-    </div>
-
-    <div class="col-md-4 mb-4">
-        <div class="h-100 p-4 text-white bg-info rounded-3 shadow-sm" style="background-color: #0dcaf0;">
-            <h2>🩺 Check-up</h2>
-            <p>Schedule a meeting with a campus counselor or doctor.</p>
+        <div class="d-flex justify-content-center gap-2">
             @auth
-                <a href="{{ route('booking.index') }}" class="btn btn-light text-dark">Book Now</a>
+                @if(Auth::user()->isDoctor())
+                    <a href="{{ route('dashboard') }}" class="btn btn-primary btn-lg px-4 shadow-sm">
+                        Go to Dashboard
+                    </a>
+                @else
+                    <a href="{{ route('booking.index') }}" class="btn btn-primary btn-lg px-4 shadow-sm">
+                        Book a Session
+                    </a>
+                @endif
             @else
-                <a href="{{ route('login') }}" class="btn btn-light text-dark">Login First</a>
+                <a href="{{ route('login') }}" class="btn btn-primary btn-lg px-4 shadow-sm">Login to Start</a>
+                <a href="{{ route('register') }}" class="btn btn-outline-secondary btn-lg px-4 shadow-sm">Register</a>
             @endauth
         </div>
     </div>
 </div>
 
-<div class="text-center mt-5 text-muted">
-    <small>Binus Health Portal &copy; {{ date('Y') }}</small>
+<div class="row align-items-stretch g-4">
+    
+    <div class="col-md-4">
+        <div class="h-100 p-5 text-white bg-success rounded-4 shadow-sm position-relative overflow-hidden">
+            <h2 class="fw-bold">🍎 Lifestyle</h2>
+            <p class="opacity-75">Read the latest tips on nutrition, sleep, and handling exam stress.</p>
+            <a href="{{ route('articles.index') }}" class="btn btn-light text-success fw-bold stretched-link mt-2">
+                Read Articles
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="h-100 p-5 bg-white border rounded-4 shadow-sm">
+            <h2 class="fw-bold text-primary">💬 Community</h2>
+            <p class="text-muted">Feeling overwhelmed? You are not alone. Join the discussion.</p>
+            <a href="{{ route('forum.index') }}" class="btn btn-outline-primary mt-2">
+                Visit Forum
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="h-100 p-5 text-white bg-info rounded-4 shadow-sm" style="background-color: #0dcaf0;">
+            <h2 class="fw-bold text-dark">🩺 Check-up</h2>
+            <p class="text-dark opacity-75">Schedule a meeting with a campus counselor or doctor.</p>
+            
+            @auth
+                @if(Auth::user()->isDoctor())
+                    <a href="{{ route('admin.appointments.index') }}" class="btn btn-light text-dark fw-bold mt-2 shadow-sm">
+                        View Requests
+                    </a>
+                @else
+                    <a href="{{ route('dashboard') }}" class="btn btn-dark text-white fw-bold mt-2 shadow-sm">
+                        Go to Dashboard
+                    </a>
+                @endif
+            @else
+                <a href="{{ route('login') }}" class="btn btn-light text-dark fw-bold mt-2">
+                    Login First
+                </a>
+            @endauth
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-5 text-muted py-3">
+    <small>BinusCare Health Portal &copy; {{ date('Y') }}</small>
 </div>
 @endsection

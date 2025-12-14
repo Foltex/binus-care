@@ -27,13 +27,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        $user = Auth::user();
-
-        if ($user->isDoctor()) {
-            // Redirect Doctor to Admin Appointments List
-            return redirect()->intended(route('admin.appointments.index'));
-        }
-
         return redirect()->intended(route('dashboard'));
     }
 

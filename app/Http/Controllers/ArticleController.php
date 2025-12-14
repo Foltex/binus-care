@@ -39,7 +39,6 @@ class ArticleController extends Controller
             'title' => 'required|string|max:255|unique:articles,title',
             'category' => 'required|string|max:50',
             'content' => 'required|string',
-            // 'image_path' => 'nullable|image', // Assuming no file uploads for simplicity
         ]);
 
         Article::create($validated);

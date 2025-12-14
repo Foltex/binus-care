@@ -19,7 +19,7 @@ class AppointmentController extends Controller
         // 1. Validate
         $request->validate([
             'type' => 'required|in:medical,psychology',
-            'scheduled_at' => 'required|date|after:now',
+            'scheduled_at' => 'required|date|after:today',
             'notes' => 'nullable|string|max:500',
         ]);
 
@@ -70,20 +70,20 @@ class AppointmentController extends Controller
 
     public function cancel(Appointment $appointment)
     {
-        // 1. Authorization: Ensure the student owns this appointment
+        // Authorization: Ensure the student owns this appointment
         if ($appointment->user_id !== Auth::id()) {
             abort(403, 'Unauthorized action.');
         }
 
-        // 2. Prevent canceling if already completed
-        if ($appointment->status === 'completed' || $appointment->status === 'canceled') {
-            return back()->with('error', 'Cannot cancel an already completed or canceled session.');
+        // Only allow canceling PENDING appointments
+        if ($appointment->status !== 'pending') {
+            return back()->with('error', 'You cannot cancel a confirmed or completed appointment.');
         }
 
-        // 3. Update status
+        // Update status
         $appointment->status = 'canceled';
         $appointment->save();
 
-        return back()->with('success', 'Appointment successfully canceled.');
+        return back()->with('success', 'Appointment request canceled successfully.');
     }
 }
