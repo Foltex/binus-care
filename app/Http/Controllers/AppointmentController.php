@@ -16,14 +16,14 @@ class AppointmentController extends Controller
 
     public function store(Request $request)
     {
-        // 1. Validate
+        // Validate
         $request->validate([
             'type' => 'required|in:medical,psychology',
             'scheduled_at' => 'required|date|after:today',
             'notes' => 'nullable|string|max:500',
         ]);
 
-        // 2. Create Appointment
+        // Create Appointment
         Appointment::create([
             'user_id' => Auth::id(), 
             'type' => $request->type,
@@ -32,7 +32,6 @@ class AppointmentController extends Controller
             'status' => 'pending' 
         ]);
 
-        // 3. Redirect to history page
         return redirect()->route('booking.history')->with('success', 'Appointment requested successfully!');
     }
 
@@ -56,12 +55,12 @@ class AppointmentController extends Controller
 
     public function confirm(Appointment $appointment)
     {
-        // 1. Authorization check
+        // Authorization check
         if (!Auth::user()->isDoctor()) {
             abort(403, 'Unauthorized action.');
         }
 
-        // 2. Update status
+        // Update status
         $appointment->status = 'confirmed';
         $appointment->save();
 
@@ -70,7 +69,7 @@ class AppointmentController extends Controller
 
     public function cancel(Appointment $appointment)
     {
-        // Authorization: Ensure the student owns this appointment
+        // Authorization
         if ($appointment->user_id !== Auth::id()) {
             abort(403, 'Unauthorized action.');
         }

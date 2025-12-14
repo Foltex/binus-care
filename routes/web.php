@@ -12,12 +12,12 @@ Route::get('/', function () {
     return view('home'); 
 })->name('home');
 
-// Article / Blog Routes 
+// Article 
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
 Route::get('/articles/{slug}', [ArticleController::class, 'show'])->name('articles.show');
 
 
-// AUTHENTICATED ROUTES (Must be logged in)
+// section only for logged in users
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])

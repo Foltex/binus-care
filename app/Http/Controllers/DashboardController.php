@@ -13,7 +13,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // 1. DOCTOR DASHBOARD LOGIC
+        // doctor
         if ($user->isDoctor()) {
             
             // Get Counts for Stats Cards
@@ -35,7 +35,7 @@ class DashboardController extends Controller
             ));
         } 
         
-        // 2. STUDENT DASHBOARD LOGIC
+        // students
         else {
             
             // Personal appointment stats

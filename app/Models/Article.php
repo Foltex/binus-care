@@ -12,10 +12,10 @@ class Article extends Model
 
     protected $fillable = [
         'title',
-        'slug',         // URL friendly title (e.g., 'tips-for-exam-stress')
+        'slug',         
         'content',
-        'category',     // e.g., 'Mental Health', 'Nutrition'
-        'image_path'    // Path to the uploaded image file
+        'category',    
+        'image_path'    
     ];
 
     protected static function boot()

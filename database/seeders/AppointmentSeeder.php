@@ -24,7 +24,7 @@ class AppointmentSeeder extends Seeder
             'status' => 'pending',
         ]);
 
-        // Confirmed Appointment (Ready for service)
+        // Confirmed Appointment 
         Appointment::create([
             'user_id' => $testStudentId,
             'type' => 'medical',

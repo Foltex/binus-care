@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'name' => 'Dr. B Care',
             'email' => 'doctor@binus.ac.id',
             'email_verified_at' => now(),
-            'password' => Hash::make('password'), // Password is 'password'
+            'password' => Hash::make('password'), 
             'role' => User::ROLE_DOCTOR,
             'remember_token' => Str::random(10),
         ]);
@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             'name' => 'Binusian Test',
             'email' => 'student@binus.ac.id',
             'email_verified_at' => now(),
-            'password' => Hash::make('password'), // Password is 'password'
+            'password' => Hash::make('password'), 
             'role' => User::ROLE_STUDENT,
             'remember_token' => Str::random(10),
         ]);
