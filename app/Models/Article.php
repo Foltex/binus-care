@@ -15,7 +15,8 @@ class Article extends Model
         'slug',         
         'content',
         'category',    
-        'image_path'    
+        'image_path',
+        'user_id'    
     ];
 
     protected static function boot()

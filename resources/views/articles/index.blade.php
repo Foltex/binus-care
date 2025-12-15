@@ -20,11 +20,27 @@
             @endauth
         </div>
     </div>
+
     <div class="row">
         @forelse($articles as $article)
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm border-0">
-                    <img src="{{ $article->image_path }}" class="card-img-top" alt="{{ $article->title }}">
+                    @if($article->image_path && str_starts_with($article->image_path, 'http'))
+                        <img src="{{ $article->image_path }}" 
+                             class="card-img-top" 
+                             alt="{{ $article->title }}"
+                             style="height: 200px; object-fit: cover; width: 100%;">
+                    @elseif($article->image_path)
+                        <img src="{{ asset('storage/' . $article->image_path) }}" 
+                             class="card-img-top" 
+                             alt="{{ $article->title }}"
+                             style="height: 200px; object-fit: cover; width: 100%;">
+                    @else
+                        <img src="https://via.placeholder.com/400x200?text=No+Image" 
+                             class="card-img-top" 
+                             alt="No Image"
+                             style="height: 200px; object-fit: cover; width: 100%;">
+                    @endif
                     
                     <div class="card-body">
                         <span class="badge bg-success mb-2">{{ $article->category }}</span>

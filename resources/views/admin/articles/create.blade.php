@@ -4,9 +4,9 @@
 <div class="row justify-content-center">
     <div class="col-md-10">
         <div class="card shadow">
-            <div class="card-header bg-primary text-white">✍️ Create New Health Article</div>
+            <div class="card-header bg-primary text-white">Create New Health Article</div>
             <div class="card-body">
-                <form action="{{ route('admin.articles.store') }}" method="POST">
+                <form action="{{ route('admin.articles.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     
                     <div class="mb-3">
@@ -25,6 +25,13 @@
                             <option value="Sleep">Sleep</option>
                         </select>
                         @error('category')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Article Image</label>
+                        <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
+                        <small class="text-muted">Supported formats: jpeg, png, jpg, gif.</small>
+                        @error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
                     <div class="mb-3">
