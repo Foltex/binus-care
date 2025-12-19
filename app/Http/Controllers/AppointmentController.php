@@ -74,7 +74,7 @@ class AppointmentController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        // Only allow canceling PENDING appointments
+        // Only allow canceling pending appointments
         if ($appointment->status !== 'pending') {
             return back()->with('error', 'You cannot cancel a confirmed or completed appointment.');
         }

@@ -18,7 +18,6 @@ Route::get('/articles/{slug}', [ArticleController::class, 'show'])->name('articl
 
 
 // section only for logged in users
-
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
