@@ -8,9 +8,6 @@ use Illuminate\Database\Seeder;
 
 class AppointmentSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $testStudentId = User::where('email', 'student@binus.ac.id')->value('id');
